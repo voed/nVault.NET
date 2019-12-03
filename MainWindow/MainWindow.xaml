@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:nVault.NET"
         xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:sfdata="clr-namespace:Syncfusion.Data;assembly=Syncfusion.Data.WPF"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:viewModel="clr-namespace:nVault.NET.ViewModel"
         xmlns:mi="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:helper="clr-namespace:nVault.NET.Helper"
 
         mc:Ignorable="d"
-        Title="{x:Static local:Utils.ProgramName}" Height="450" MinWidth="640" Loaded="Window_Loaded" Closing="Window_Closing" >
+        Title="{x:Static helper:Utils.ProgramName}" Height="450" MinWidth="640" Loaded="Window_Loaded" Closing="Window_Closing" >
     <Window.DataContext>
         <viewModel:VaultViewModel/>
     </Window.DataContext>
@@ -23,6 +25,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <helper:KeyComparer x:Key="KeyComparer"></helper:KeyComparer>
+        <helper:ValueComparer x:Key="ValueComparer"></helper:ValueComparer>
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding x:Name="New" Command="New" Executed="New_Executed"></CommandBinding>
@@ -88,7 +92,7 @@
             <DockPanel Grid.Row="0" Height="36">
                 <syncfusion:SfTextBoxExt Watermark="Search..." x:Name="SearchTextBox" TextWrapping="NoWrap" Height="23" Width="300" TextChanged="SearchTextBox_TextChanged" HorizontalAlignment="Left" Margin="5,0,5,0"/>
                 <Button x:Name="SearchNext" Content="Next" HorizontalAlignment="Left" Width="75" Grid.RowSpan="2" Click="SearchNext_Click" Height="23" Margin="5,0,5,0"/>
-                <ComboBox x:Name="SearchComboBox" Height="23" SelectedIndex="0" SelectionChanged="SearchComboBox_SelectionChanged" ItemsSource="{x:Static local:Utils.SearchPhrases}"  HorizontalAlignment="Left" Width="100" Margin="15,0,5,0"/>
+                <ComboBox x:Name="SearchComboBox" Height="23" SelectedIndex="0" SelectionChanged="SearchComboBox_SelectionChanged" ItemsSource="{x:Static helper:Utils.SearchPhrases}"  HorizontalAlignment="Left" Width="100" Margin="15,0,5,0"/>
 
                 <DockPanel HorizontalAlignment="Right" Margin="5,0,5,0">
                     <Button x:Name="RemoveRowButton" ToolTip="Remove row" Height="23" Width="23" HorizontalAlignment="Right" Margin="5,0,5,0" Click="RemoveRowButton_Click">
@@ -105,16 +109,20 @@
                                    AlternationCount="2" RowHeight="30" ColumnSizer="AutoLastColumnFill" CurrentCellBorderThickness="1" 
                                    AlternatingRowStyle="{StaticResource AlternatingRowStyle}"
                                    AllowDeleting="True" AllowSorting="True" GridValidationMode="InEdit"
-                                   
+                                   AllowDraggingColumns="True"
                                    >
                 <syncfusion:SfDataGrid.SortColumnDescriptions>
                     <syncfusion:SortColumnDescription  ColumnName="EntryKey" SortDirection="Ascending"></syncfusion:SortColumnDescription>
                 </syncfusion:SfDataGrid.SortColumnDescriptions>
+                <syncfusion:SfDataGrid.SortComparers>
+                    <sfdata:SortComparer PropertyName="EntryKey" Comparer="{StaticResource KeyComparer}"></sfdata:SortComparer>
+                    <sfdata:SortComparer PropertyName="EntryValue" Comparer="{StaticResource ValueComparer}"></sfdata:SortComparer>
+                </syncfusion:SfDataGrid.SortComparers>
 
                 <syncfusion:SfDataGrid.Columns>
-                    <syncfusion:GridTextColumn HeaderText="Key" MappingName="EntryKey" AllowEditing="True" UpdateTrigger="PropertyChanged" AllowResizing="True" />
+                    <syncfusion:GridTextColumn HeaderText="Key" MappingName="EntryKey" AllowEditing="True" UpdateTrigger="PropertyChanged" AllowResizing="True"/>
                     <syncfusion:GridTextColumn  HeaderText="Value" MappingName="EntryValue" AllowEditing="True" UpdateTrigger="PropertyChanged" AllowResizing="True"/>
-                    <syncfusion:GridTextColumn HeaderText="Timestamp(raw)" MappingName="EntryDateRaw"  AllowEditing="True" Width="120" UpdateTrigger="PropertyChanged"/>
+                    <syncfusion:GridNumericColumn HeaderText="Timestamp(raw)" MappingName="EntryDateRaw"  AllowEditing="True" Width="120" UpdateTrigger="PropertyChanged" NumberDecimalDigits="0"/>
                     <syncfusion:GridTemplateColumn HeaderText="Timestamp" MappingName="EntryDate" Width="200" UpdateTrigger="PropertyChanged">
 
                         <syncfusion:GridTemplateColumn.CellTemplate >
@@ -126,7 +134,7 @@
                             <DataTemplate>
                                 <xctk:DateTimePicker AutoCloseCalendar="True" x:Name="xctkDatePicker" Value="{Binding Path=EntryDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                      ClipValueToMinMax="True" Kind="Utc" Format="SortableDateTime" 
-                                                     Minimum="{x:Static local:Utils.MinDate}" Maximum="{x:Static local:Utils.MaxDate}"/>
+                                                     Minimum="{x:Static helper:Utils.MinDate}" Maximum="{x:Static helper:Utils.MaxDate}"/>
                             </DataTemplate>
                         </syncfusion:GridTemplateColumn.EditTemplate>
                     </syncfusion:GridTemplateColumn>

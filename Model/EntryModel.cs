@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using nVault.NET.Helper;
 
 namespace nVault.NET.Model
 {

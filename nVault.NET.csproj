@@ -120,7 +120,9 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper\NaturalSort.cs" />
     <Compile Include="Model\EntryModel.cs" />
+    <Compile Include="Helper\Comparers.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <AutoGen>True</AutoGen>
@@ -128,7 +130,7 @@
       <DependentUpon>AssemblyInfo.tt</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\SearchExt.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="Helper\Utils.cs" />
     <Compile Include="ViewModel\VaultViewModel.cs" />
     <Page Include="AboutWindow.xaml">
       <SubType>Designer</SubType>

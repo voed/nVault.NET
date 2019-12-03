@@ -4,32 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx="clr-namespace:nVault.NET.Properties"
-        xmlns:local="clr-namespace:nVault.NET" SizeToContent="Height" Width="300"
+        xmlns:local="clr-namespace:nVault.NET"
+        xmlns:helper="clr-namespace:nVault.NET.Helper"
+        SizeToContent="Height" Width="300"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="{Binding StringFormat=About {0}, Source={x:Static local:Utils.ProgramName}}">
+        Title="{Binding StringFormat=About {0}, Source={x:Static helper:Utils.ProgramName}}">
     <StackPanel x:Uid="clientArea">
         <StackPanel VerticalAlignment="Top">
             <StackPanel>
                 <Image x:Name="LogoImg" Margin="25, 25, 25, 0" Width="192" Height="192" ></Image>
                 
-                <Label FontSize="28" x:Name="productName"  Content="{x:Static local:Utils.ProgramName}" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="versionLabel" Text="{Binding StringFormat=Version {0}, Source={x:Static local:Utils.ProgramVersion}}" HorizontalAlignment="Center">
+                <Label FontSize="28" x:Name="productName"  Content="{x:Static helper:Utils.ProgramName}" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="versionLabel" Text="{Binding StringFormat=Version {0}, Source={x:Static helper:Utils.ProgramVersion}}" HorizontalAlignment="Center">
                 </TextBlock>
             </StackPanel>
             <StackPanel Margin="20">
-                <TextBlock Text="{x:Static local:Utils.ProgramDescription}" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="{x:Static helper:Utils.ProgramDescription}" HorizontalAlignment="Center"></TextBlock>
             </StackPanel>
             
             <TextBlock HorizontalAlignment="Center" >
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0} {1}">
-                        <Binding Source="{x:Static local:Utils.ProgramCopyright}"></Binding>
-                        <Binding Source="{x:Static local:Utils.ProgramAuthor}"></Binding>
+                        <Binding Source="{x:Static helper:Utils.ProgramCopyright}"></Binding>
+                        <Binding Source="{x:Static helper:Utils.ProgramAuthor}"></Binding>
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
             <Label  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="42,0">
-                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding Mode=OneTime, Source={x:Static local:Utils.ProgramUri}}">
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding Mode=OneTime, Source={x:Static helper:Utils.ProgramUri}}">
                     <Hyperlink.Inlines>
                         <TextBlock Text="Report a bug" />
                     </Hyperlink.Inlines>

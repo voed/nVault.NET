@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Size = System.Drawing.Size;
 
-namespace nVault.NET
+namespace nVault.NET.Helper
 {
     public static class Utils
     {
@@ -93,6 +90,15 @@ namespace nVault.NET
             }
         }
 
-    }
+        public static int CompareResult(int compare, ListSortDirection sortDirection)
+        {
+            if (compare > 0)
+                return sortDirection == ListSortDirection.Ascending ? 1 : -1;
+            if (compare == -1)
+                return sortDirection == ListSortDirection.Ascending ? -1 : 1;
 
+            return 0;
+        }
+
+    }
 }

@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using nVault.NET.Helper;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
 using SelectionChangedEventArgs = System.Windows.Controls.SelectionChangedEventArgs;
@@ -261,21 +262,18 @@ namespace nVault.NET
 
         private void RemoveRowButton_Click(object sender, RoutedEventArgs e)
         {
+            int index = MainGrid.SelectedIndex;
 
-                int index = MainGrid.SelectedIndex;
+            EntryModel item = (EntryModel) MainGrid.SelectedItem;
+            if (item == null)
+                return;
 
-                EntryModel item = (EntryModel)MainGrid.SelectedItem;
-                if (item == null)
-                    return;
-
-                _model.VaultCollection.Remove(item);
-                _dataChanged = true;
-                if (MainGrid.GetRecordsCount() > 0)
-                {
-                    MainGrid.SelectedItem = _model.VaultCollection[index - 1];
-                }
-
-
+            _model.VaultCollection.Remove(item);
+            _dataChanged = true;
+            if (MainGrid.GetRecordsCount() > 0)
+            {
+                MainGrid.SelectedItem = _model.VaultCollection[index - 1];
+            }
         }
     }
 }
