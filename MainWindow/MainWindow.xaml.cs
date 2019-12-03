@@ -41,6 +41,7 @@ namespace nVault.NET
             _searchHelper = new SearchExt(MainGrid);
             _searchHelper.SetSearch(_currSearchType);
             MainGrid.SearchHelper = _searchHelper;
+            MainGrid.CurrentCellValidating += MainGrid_CurrentCellValidating;
 
             var cmdline = Environment.GetCommandLineArgs();
             if(cmdline.Length == 2 && File.Exists(cmdline[1]))
@@ -48,9 +49,19 @@ namespace nVault.NET
 #if DEBUG
             else
                 LoadVault("example.vault");
-
-
 #endif
+        }
+
+        private void MainGrid_CurrentCellValidating(object sender, Syncfusion.UI.Xaml.Grid.CurrentCellValidatingEventArgs e)
+        {
+            if (e.Column.MappingName == nameof(EntryModel.EntryKey))
+            {
+                if (_model.VaultCollection.Count(x => x.EntryKey.Equals(e.NewValue.ToString())) > 1)
+                {
+                    e.IsValid = false;
+                    e.ErrorMessage = "Key must be unique";
+                }
+            }
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
