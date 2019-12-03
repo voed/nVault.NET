@@ -99,6 +99,11 @@ namespace nVault.NET.Helper
 
             return 0;
         }
-
+        public static int Clamp(this int val, int min, int max)
+        {
+            if (val.CompareTo(min) < 0) return min;
+            if(val.CompareTo(max) > 0) return max;
+            return val;
+        }
     }
 }

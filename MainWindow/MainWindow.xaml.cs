@@ -273,7 +273,7 @@ namespace nVault.NET
 
         private void RemoveRowButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = MainGrid.SelectedIndex;
+            int index = (MainGrid.SelectedIndex-1).Clamp(0, _model.VaultCollection.Count);
 
             EntryModel item = (EntryModel) MainGrid.SelectedItem;
             if (item == null)
@@ -283,7 +283,7 @@ namespace nVault.NET
             _dataChanged = true;
             if (MainGrid.GetRecordsCount() > 0)
             {
-                MainGrid.SelectedItem = _model.VaultCollection[index - 1];
+                MainGrid.SelectedItem = _model.VaultCollection[index];
             }
         }
     }
