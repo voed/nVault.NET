@@ -120,7 +120,6 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper\NaturalSort.cs" />
     <Compile Include="Model\EntryModel.cs" />
     <Compile Include="Helper\Comparers.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -216,5 +215,8 @@
   <PropertyGroup>
     <PreBuildEvent>"$(DevEnvDir)\TextTransform.exe" -a !!BuildConfiguration!$(Configuration) "$(ProjectDir)Properties\AssemblyInfo.tt"
 </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (powershell -ExecutionPolicy Unrestricted -file "$(SolutionDir)publish\script.ps1" $(TargetDir) $(ProjectName) $(SolutionDir))</PostBuildEvent>
   </PropertyGroup>
 </Project>

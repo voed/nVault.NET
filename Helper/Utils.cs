@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -15,6 +16,9 @@ namespace nVault.NET.Helper
 {
     public static class Utils
     {
+        [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
+        private static extern int StrCmpLogicalW(string psz1, string psz2);
+
         public static readonly List<string> SearchPhrases = new List<string>
         {
             "All",
@@ -53,10 +57,9 @@ namespace nVault.NET.Helper
 
         public static readonly string ProgramUri = Properties.Resources.ProgramUri;
 
-        public static DateTime UnixToDateTime(int timestamp)
-        {
-            return DateTimeOffset.FromUnixTimeSeconds(timestamp).UtcDateTime;
-        }
+        public static int CompareNatural(string str1, string str2) => StrCmpLogicalW(str1, str2);
+
+        public static DateTime UnixToDateTime(int timestamp) => DateTimeOffset.FromUnixTimeSeconds(timestamp).UtcDateTime;
 
         public static int DateTimeToUnix(DateTime time)
         {

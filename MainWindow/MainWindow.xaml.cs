@@ -48,7 +48,7 @@ namespace nVault.NET
                 LoadVault(cmdline[1]);
 #if DEBUG
             else
-                LoadVault("example.vault");
+                LoadVault(@"online_players.vault");
 #endif
         }
 
@@ -126,6 +126,7 @@ namespace nVault.NET
             _model.VaultVersion = _nVault.Version;
             MainGrid.GridColumnSizer.ResetAutoCalculationforAllColumns();
             MainGrid.GridColumnSizer.Refresh();
+            var list = _model.VaultCollection.Where(x => x.EntryKey.Equals("STEAM_1:0:752546275")).ToList();
             _dataLoaded = true;
             _currentFile = filename;
             UpdateTitle();
@@ -284,6 +285,31 @@ namespace nVault.NET
             if (MainGrid.GetRecordsCount() > 0)
             {
                 MainGrid.SelectedItem = _model.VaultCollection[index];
+            }
+        }
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var file = ((string[])e.Data.GetData(DataFormats.FileDrop))?.FirstOrDefault();
+                if (_dataLoaded)
+                    Process.Start(Assembly.GetExecutingAssembly().Location, $"\"{file}\"");
+                else
+                    LoadVault(file);
+            }
+        }
+
+        private void Window_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
+            {
+                var file = ((string[])e.Data.GetData(DataFormats.FileDrop, true))?.FirstOrDefault();
+                if (!Path.GetExtension(file).ToLowerInvariant().Equals(".vault"))
+                {
+                    e.Effects = DragDropEffects.None;
+                    e.Handled = true;
+                }
             }
         }
     }

@@ -24,7 +24,7 @@ using System.Windows;
                                               // app, or any theme specific resource dictionaries)
 )]
 
-[assembly: AssemblyVersion("1.0.2.188")]
-[assembly: AssemblyFileVersion("1.0.2.188")]
+[assembly: AssemblyVersion("1.0.7.228")]
+[assembly: AssemblyFileVersion("1.0.7.228")]
 [assembly: NeutralResourcesLanguage("ru")]
 
